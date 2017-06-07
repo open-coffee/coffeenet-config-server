@@ -1,0 +1,33 @@
+sudo: required
+
+language: java
+
+jdk:
+- oraclejdk8
+
+services:
+- docker
+
+before_deploy:
+- mvn -DskipTests package
+- export JAR_FILE=$(ls target/config-server-*.jar)
+- echo "deploying $JAR_FILE to GitHub releases"
+
+deploy:
+  - provider: script
+    script: mvn -DskipTests package -Ddocker.username=$DOCKER_USER -Ddocker.password=$DOCKER_PASS docker:build docker:push
+    on:
+      tags: true
+  - provider: releases
+    api_key:
+      secure: bWIqQXVFPoxweztwRVH2aFV5+FAtpr8d7tQ9c3ytHYOQ6bu7cn+GsQHLyxTywBQOlw4KztBIcfWmcsdWRC1Auk5sEK5966ZtbqZ1nJnv/3XjXhCvPJGy0ST1DInkPu2p0z1vl+Ben4WsYRFUjeduPPoA2aJULkA58MoiDd+BPwq27p8NJhzI6QkyZcnkqJOe4wfXDlHxRAboABM76n/oxm3aL79iHpfuY9O8gdej4vMfti2ih/LD1d37Kz57MyWipysd3YOVol2FaYVx8FArKXnzFORi+A9osxJm6FPS/w4qBIOoAWxbjrC776bW9TTvuEI3p12zIQQqE9kf8D/+gh7Xt68yhJzONDvqPQzAmuEi7UfQEInYCJ7q3iMIq9FUX5LzHOC7RPMcpsR/W7BoP5mWUTWzcvL1S5dRrcxb7lBwjPXfzYdiCZsFBBlUsao/iEfta5W4E6+jwpOhDnG7gF0re9Yrpph9f99TlIuF89ktbZ393ACyuEXquQF57roSB/UdJVzBu/ARb9cZVM0dqEPiCNgjcvPJnmC4pCUxHPyhcj6g31ZIbBafvS2vwwh+DGukOjyiSadmnMVfBB0TEPVpPfBCunTI8pOnXYlT13W6EuRlrlvGuh362bmthjL/4jC/QFAaLP3fwSsXt8wmjIfLJ8ZlYjgt5O66ggbmsmY=
+    file: "${JAR_FILE}"
+    skip_cleanup: true
+    on:
+      tags: true
+      repo: coffeenet/coffeenet-config-server
+
+env:
+  global:
+  - secure: MYB3jDGzGn6nXGODWOD4CaIoLelqoISi1YOCYetKRZrUFt2afK2UysNS0QU4EGJApdeV43rk2MWIwY0wH426sA59/OwL3bV0Zb6mniWyH6vGmJMpI9EEvOS4bvuqN+Mrp5Vj968WdJ3qQfVsULf6wPTworQZb7SPvW6+skn1xPbsVfvbJn+x1jyDjHUMuGAW7+FxuDoHPX0xl5qjnyGLKVDuTWySUJkFZD5JFhiX1M7ixtgncx4Sw0ULS7pjzFz1N3lXIUhSntwBRoE4x4NAqvL3TerN5n5rH0weObJtKAWddyS7EFR2MIKt7RVYly5Qfz8eFqHC4aBBFM6myax3AvUNEkp/L4xECBVBzIYkCmy1cui9rSLDZOEp3U/MX/APdRDDMXqs+AT3n5QVqtukpCdGOLtakVHPr7RnHVpV7iSSZ2GFlDCOevolBJf2D00PTty5y3Js8Erh0T6AsY2LRFERvR6r1A1Q29+D65XPP08uA2xD76wKSp5hseqjSQuvt+s5ezzwnlzXBsjfvLX9sQWVbM3nRMTESjf5r3A0GN2U6oBG7LeTEgzb58L6HyXJEUXzSE8Xqjyx0d9vGsX+MQ0+xmXc22XDTBZqPTpIoVrT+qnAL03AhjKNygwNik7OyUeFaCveL/gTI20MopbOrxgNABcKzJvBz8imagmLtp0=
+  - secure: d+jVITuWngN8LKaeHsd4Qe3bJc8Skf/h3vVnaP34gSbvX4kuy1ZsNPGtctACxMXk/3M08t8/gfC0ZcD2VYdwV85YVNaUk/IxKiaUBgBqXAWUrlPHF0I8ultH/F5waqeIrAQQefNeX9MlmBF6gGQPE2fdKgDcK3eAvVcdj8Q1sU5VyeVpkv4PTdiSdf/pfTj4uwFy3BbIuopzGnS7qySJc/bTe0EOmoXKw62UGtmSgD2geSqsplCwh5M54yX7SOtRXMEFE5VXexfvyowzvxRake1oAa/+IecxAmMD6MEkPTXeRbQANkfv50vOItywLHKtDhzNiFm7IEr7thgZZVemXwUFVrAsfRqWcLhMazLbjPALsxEcqaYVa1ODCkfUGCsXZye99R51zDKidYNYQrlWHKmn9gSs6j+kbCERE1vP2I6TaiCt8+i5VOA7FQebVx76mX14Af21V1iro1O0XtmpfYjsdqliRELweAKDttqXgIYKIPSFMzIfTHb6NvuOiyCKl5UmTub3xbxal9kD7gnZmq6dv8LdOElBswMtlGUFIM0k/OL7cpodwvRYIb7CXfZiuNYjSQ80X4HWQY9K1zxTbpJYe+dhMl/glAnSaQyaVHRRM/5lzldRDvYdFM7BgM0YfpWiVo34D6SxZhvU34pG5S2UGg9S4jXNELUJAHXbTrM=
