@@ -12,4 +12,4 @@ coffeenet:
 spring.cloud.config.server.git:
   uri: file:./configs
   clone-on-start: true
-  force-pull: false
+  search-paths: '{application}/{profile}'
