@@ -1,0 +1,25 @@
+version: '2'
+services:
+  consul:
+    image: consul:latest
+    hostname: consul
+    command: 'agent -dev -client 0.0.0.0'
+    ports:
+      - '8400:8400'
+      - '8500:8500'
+      - '8600:53/udp'
+
+  vault:
+    image: vault:latest
+    hostname: vault
+    ports:
+      - '8200:8200'
+    volumes:
+      - ./vault/config:/vault/config:rw
+    links:
+      - consul
+    cap_add:
+      - 'IPC_LOCK'
+    environment:
+      - VAULT_ADDR: http://127.0.0.1:8200
+    entrypoint: vault server -config=/vault/config/
