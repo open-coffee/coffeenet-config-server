@@ -11,14 +11,11 @@ coffeenet:
 
 spring:
   profiles:
-    active: vault, git
+    active: git
   cloud:
     config:
       server:
         git:
-          order: 1
           uri: file:./configs
           clone-on-start: true
           search-paths: '{application}/{profile}'
-        vault:
-          order: 0
