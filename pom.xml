@@ -50,6 +50,10 @@
             <groupId>coffee.synyx</groupId>
             <artifactId>starter-logging</artifactId>
         </dependency>
+        <dependency>
+            <groupId>coffee.synyx</groupId>
+            <artifactId>starter-discovery</artifactId>
+        </dependency>
 
         <!-- Spring Config -->
         <dependency>
