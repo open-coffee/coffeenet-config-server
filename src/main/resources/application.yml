@@ -3,7 +3,6 @@ server:
 
 coffeenet:
   application-name: CoffeeNet Config Server
-  allowed-authorities: ROLE_COFFFEENET-ADMIN
   profile: development
   logging:
     console:
