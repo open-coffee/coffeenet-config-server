@@ -2,7 +2,7 @@ server:
   port: 8888
 
 coffeenet:
-  application-name: CoffeeNet Config Server
+  application-name: 'CoffeeNet Config Server'
   profile: development
   logging:
     console:
