@@ -17,6 +17,9 @@ public class ResourceProperties {
     @NotEmpty
     private String id;
 
+    @NotEmpty
+    private String publicKey = "coffeenet-public.cert";
+
     public String getId() {
 
         return id;
@@ -26,5 +29,17 @@ public class ResourceProperties {
     public void setId(String id) {
 
         this.id = id;
+    }
+
+
+    public String getPublicKey() {
+
+        return publicKey;
+    }
+
+
+    public void setPublicKey(String publicKey) {
+
+        this.publicKey = publicKey;
     }
 }
