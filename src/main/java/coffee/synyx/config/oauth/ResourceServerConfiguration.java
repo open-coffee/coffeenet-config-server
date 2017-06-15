@@ -2,6 +2,8 @@ package coffee.synyx.config.oauth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,14 +18,17 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
  */
 @Configuration
 @EnableResourceServer
+@EnableConfigurationProperties(ResourceProperties.class)
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     private final TokenStore tokenStore;
+    private final ResourceProperties resourceProperties;
 
     @Autowired
-    public ResourceServerConfiguration(TokenStore tokenStore) {
+    public ResourceServerConfiguration(TokenStore tokenStore, ResourceProperties resourceProperties) {
 
         this.tokenStore = tokenStore;
+        this.resourceProperties = resourceProperties;
     }
 
     @Override
@@ -36,6 +41,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
 
-        resources.tokenStore(tokenStore);
+        resources.resourceId(resourceProperties.getId()).tokenStore(tokenStore);
     }
 }
