@@ -18,6 +18,8 @@ import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
 
+import java.nio.charset.Charset;
+
 
 /**
  * @author  Tobias Schneider - schneider@synyx.de
@@ -45,16 +47,16 @@ public class TokenStoreConfiguration {
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
 
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         Resource resource = new ClassPathResource(resourceProperties.getPublicKey());
         String publicKey;
 
         try {
-            publicKey = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
+            publicKey = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), Charset.forName("UTF-8"));
         } catch (IOException e) {
             throw new PublicKeyException("Could not retrieve the public CoffeeNet key", e);
         }
 
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setVerifierKey(publicKey);
 
         return converter;
