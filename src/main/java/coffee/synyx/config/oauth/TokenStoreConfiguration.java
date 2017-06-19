@@ -26,13 +26,13 @@ import java.nio.charset.Charset;
  */
 @Configuration
 @EnableConfigurationProperties(KeyStoreProperties.class)
-public class TokenStoreConfiguration {
+class TokenStoreConfiguration {
 
     private final ApplicationContext context;
     private final KeyStoreProperties keyStoreProperties;
 
     @Autowired
-    public TokenStoreConfiguration(ApplicationContext context, KeyStoreProperties keyStoreProperties) {
+    TokenStoreConfiguration(ApplicationContext context, KeyStoreProperties keyStoreProperties) {
 
         this.context = context;
         this.keyStoreProperties = keyStoreProperties;
@@ -40,16 +40,16 @@ public class TokenStoreConfiguration {
 
     @Bean
     @Autowired
-    public TokenStore tokenStore(JwtAccessTokenConverter jwtTokenEnhancer) {
+    TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
 
-        return new JwtTokenStore(jwtTokenEnhancer);
+        return new JwtTokenStore(jwtAccessTokenConverter);
     }
 
 
     @Bean
-    protected JwtAccessTokenConverter jwtTokenEnhancer() {
+    JwtAccessTokenConverter jwtAccessTokenConverter() {
 
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 
         if (keyStoreProperties.isEnabled()) {
             final Resource resource = context.getResource(keyStoreProperties.getPublicKey());
