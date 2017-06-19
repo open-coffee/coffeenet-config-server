@@ -14,11 +14,11 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import org.springframework.util.FileCopyUtils;
-
 import java.io.IOException;
 
-import java.nio.charset.Charset;
+import static org.springframework.util.FileCopyUtils.copyToByteArray;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 /**
@@ -57,8 +57,7 @@ class TokenStoreConfiguration {
             String publicKey;
 
             try {
-                publicKey = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()),
-                        Charset.forName("UTF-8"));
+                publicKey = new String(copyToByteArray(resource.getInputStream()), UTF_8);
             } catch (IOException e) {
                 throw new PublicKeyException("Could not retrieve the public CoffeeNet key", e);
             }
