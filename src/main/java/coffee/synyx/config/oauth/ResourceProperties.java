@@ -11,14 +11,11 @@ import org.springframework.validation.annotation.Validated;
  * @author  Tobias Schneider
  */
 @Validated
-@ConfigurationProperties(prefix = "coffeenet.resource")
+@ConfigurationProperties(prefix = "config-server.resource")
 public class ResourceProperties {
 
     @NotEmpty
     private String id;
-
-    @NotEmpty
-    private String publicKey = "coffeenet-public.cert";
 
     public String getId() {
 
@@ -29,17 +26,5 @@ public class ResourceProperties {
     public void setId(String id) {
 
         this.id = id;
-    }
-
-
-    public String getPublicKey() {
-
-        return publicKey;
-    }
-
-
-    public void setPublicKey(String publicKey) {
-
-        this.publicKey = publicKey;
     }
 }

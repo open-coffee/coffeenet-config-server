@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -25,15 +25,17 @@ import java.nio.charset.Charset;
  * @author  Tobias Schneider - schneider@synyx.de
  */
 @Configuration
-@EnableConfigurationProperties(ResourceProperties.class)
+@EnableConfigurationProperties(KeyStoreProperties.class)
 public class TokenStoreConfiguration {
 
-    private final ResourceProperties resourceProperties;
+    private final ApplicationContext context;
+    private final KeyStoreProperties keyStoreProperties;
 
     @Autowired
-    public TokenStoreConfiguration(ResourceProperties resourceProperties) {
+    public TokenStoreConfiguration(ApplicationContext context, KeyStoreProperties keyStoreProperties) {
 
-        this.resourceProperties = resourceProperties;
+        this.context = context;
+        this.keyStoreProperties = keyStoreProperties;
     }
 
     @Bean
@@ -47,17 +49,22 @@ public class TokenStoreConfiguration {
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
 
-        Resource resource = new ClassPathResource(resourceProperties.getPublicKey());
-        String publicKey;
-
-        try {
-            publicKey = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), Charset.forName("UTF-8"));
-        } catch (IOException e) {
-            throw new PublicKeyException("Could not retrieve the public CoffeeNet key", e);
-        }
-
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setVerifierKey(publicKey);
+
+        if (keyStoreProperties.isEnabled()) {
+            final Resource resource = context.getResource(keyStoreProperties.getPublicKey());
+
+            String publicKey;
+
+            try {
+                publicKey = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()),
+                        Charset.forName("UTF-8"));
+            } catch (IOException e) {
+                throw new PublicKeyException("Could not retrieve the public CoffeeNet key", e);
+            }
+
+            converter.setVerifierKey(publicKey);
+        }
 
         return converter;
     }
