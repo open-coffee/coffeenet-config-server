@@ -16,7 +16,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import java.io.IOException;
 
-import static org.springframework.util.FileCopyUtils.copyToByteArray;
+import static org.springframework.util.StreamUtils.copyToString;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -57,7 +57,7 @@ class TokenStoreConfiguration {
             String publicKey;
 
             try {
-                publicKey = new String(copyToByteArray(resource.getInputStream()), UTF_8);
+                publicKey = copyToString(resource.getInputStream(), UTF_8);
             } catch (IOException e) {
                 throw new PublicKeyException("Could not retrieve the public CoffeeNet key", e);
             }
