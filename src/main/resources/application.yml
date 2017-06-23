@@ -12,6 +12,11 @@ config-server:
   resource:
     id: 'config'
 
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:9999/user
+
 spring:
   profiles:
     active: git
