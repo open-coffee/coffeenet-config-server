@@ -8,6 +8,10 @@ coffeenet:
     console:
       enabled: true
 
+config-server:
+  resource:
+    id: 'config'
+
 spring:
   profiles:
     active: git
