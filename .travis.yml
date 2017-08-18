@@ -36,3 +36,7 @@ notifications:
   irc:
     channels:
       - "irc.synyx.de#CoffeeNet"
+    on_success: change # default: always
+    on_failure: always # default: always
+    use_notice: true
+    skip_join: true
