@@ -1,8 +1,7 @@
 # Changelog 
 
 ### 0.5.0-SNAPSHOT
-* Add CoffeeNet Starter Parent 0.27.0
-  * Upgrade to Spring Cloud Edgware.RELEASE
+* Add CoffeeNet Starter Parent 0.27.1
 
 ### 0.4.0
 * Add CoffeeNet Starter Parent 0.26.0
