@@ -33,5 +33,5 @@ or use a relative path.
 Just start the config server with maven:
 
 ```bash
-./mvn clean spring-boot:run
+./mvnw clean spring-boot:run
 ```
