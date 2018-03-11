@@ -1,8 +1,10 @@
 # Changelog 
 
 ### 0.5.0-SNAPSHOT
-* Add CoffeeNet Starter Parent 0.28.0
-  * Upgrade to Spring Cloud Dalston.SR5
+* Upgrade
+  * CoffeeNet Starter Parent to 0.28.0
+  * Spring Cloud to Dalston.SR5
+  * Maven docker plugin to 0.24.0
 
 ### 0.4.0
 * Add CoffeeNet Starter Parent 0.26.0
