@@ -1,6 +1,8 @@
 # Changelog 
 
 ### 0.6.0-SNAPSHOT
+* Add
+  * New CoffeeNet Logo as favicon
 
 ### 0.5.0
 * Upgrade
