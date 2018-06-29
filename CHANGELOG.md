@@ -1,5 +1,7 @@
 # Changelog 
 
+### 0.8.0-SNAPSHOT
+
 ### 0.7.0
 * Upgrade
   * CoffeeNet Starter Parent to 0.31.0
