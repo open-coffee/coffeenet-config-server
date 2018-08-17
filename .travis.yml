@@ -2,6 +2,9 @@ sudo: required
 
 language: java
 
+before_install:
+- sudo apt-get install -y markdown
+
 jdk:
 - oraclejdk8
 
@@ -12,6 +15,7 @@ before_deploy:
 - mvn -DskipTests package
 - export JAR_FILE=$(ls target/config-server-*.jar)
 - echo "deploying $JAR_FILE to GitHub releases"
+- export RELEASE_NOTES=$(awk -v start=1 '/^#{2}[[:space:]].*$/{n++;next};n==start;n==start+1{exit}' CHANGELOG.md | markdown | awk '{printf "%s",$0} END {print ""}')
 
 deploy:
   - provider: script
@@ -22,6 +26,7 @@ deploy:
     api_key:
       secure: Ceo8Tu27sRPa9deCxccYMkEEcyVxsz5xF4PP/VmzPu4fnERgLtuPQqx76Wdge/EKywmFgzwSEvB/2FvuEhpOVvJ3CYdDJ3BaPdLB06J0tWEeMEe7ldCMAGyagVyyqZrwM3D8CXYMESw4wBbUZWdRezPtHo5Lcs6tssZLZrtdt9LMF7kAs1hrhGV4L16vRCuhdAAlYV/qObGMLKfftny08b5M7C/9bPcXqPRksmCqQC+ekOrWL3iQeZCnMJU2ktOsg1vYo3UsA7e+pT/qfuc0Og/p0c3+ZlFWYQmebhekQ6KJ+WZYXXJtBDVyfz6LXnNDwYqA9v3owNd12khpr8QgQkNUvhG2kNQGKF7gDfisI4/ULWz7dOOPwteGIyOk+nIO7e5Z7eZf0k0d8xOcQd7SdW2qGyRNMVuShqvt3I4vV5xbJhHsOquop8eg6G5Jgj/UwnsgzTrlXC3DCwo7d6ajMn/gn377bbk/eRkLBKPY2//E2L9aBE5U6StAJOtvvADFjcY3RwgeZ/tiob9VZJRcpi98d8mwTBKOC7jM+P4Kz8+xo2FNJV99L6KTiEMUkz8e/bjiurxcihjP7JyrL0eG1+IAkb/Tt0z1bTvw65JNxiwEifZWVMlM4MpG/TtZKGQi7gqqovYyJAtixxFl35rVbm7ZGgcovpTgOVADeFZyMtY=
     file: '${JAR_FILE}'
+    body: "${RELEASE_NOTES}"
     skip_cleanup: true
     on:
       tags: true
