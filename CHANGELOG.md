@@ -4,10 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.8.1]
 ### Changed
 - CoffeeNet Starter Parent to version `0.33.1`
-
 
 
 ## [0.8.0]
@@ -62,7 +61,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - Logging Starter
   - Discovery Starter
   
-[Unreleased]: https://github.com/coffeenet/coffeenet-config-server/compare/config-server-0.8.0...HEAD
+[0.8.1]: https://github.com/coffeenet/coffeenet-config-server/compare/config-server-0.8.0...config-server-0.8.1
 [0.8.0]: https://github.com/coffeenet/coffeenet-config-server/compare/config-server-0.7.0...config-server-0.8.0
 [0.7.0]: https://github.com/coffeenet/coffeenet-config-server/compare/config-server-0.6.0...config-server-0.7.0
 [0.6.0]: https://github.com/coffeenet/coffeenet-config-server/compare/config-server-0.5.0...config-server-0.6.0
