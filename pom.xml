@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>coffee.synyx</groupId>
+        <groupId>rocks.coffeenet</groupId>
         <artifactId>coffeenet-starter-parent</artifactId>
         <version>0.37.0</version>
         <relativePath/>
@@ -40,11 +40,11 @@
 
         <!--CoffeeNet -->
         <dependency>
-            <groupId>coffee.synyx</groupId>
+            <groupId>rocks.coffeenet</groupId>
             <artifactId>starter-logging</artifactId>
         </dependency>
         <dependency>
-            <groupId>coffee.synyx</groupId>
+            <groupId>rocks.coffeenet</groupId>
             <artifactId>starter-discovery</artifactId>
         </dependency>
 
